@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkingReservationApp", "ParkingReservationApp\ParkingReservationApp.csproj", "{30696D14-10DF-48DC-B67C-04233A5A876C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkingReservationApp.test", "ParkingReservationApp.test\ParkingReservationApp.test.csproj", "{3B2B7551-64C4-42C2-A5ED-BD330AACFDBA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{30696D14-10DF-48DC-B67C-04233A5A876C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30696D14-10DF-48DC-B67C-04233A5A876C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30696D14-10DF-48DC-B67C-04233A5A876C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30696D14-10DF-48DC-B67C-04233A5A876C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B2B7551-64C4-42C2-A5ED-BD330AACFDBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B2B7551-64C4-42C2-A5ED-BD330AACFDBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B2B7551-64C4-42C2-A5ED-BD330AACFDBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B2B7551-64C4-42C2-A5ED-BD330AACFDBA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

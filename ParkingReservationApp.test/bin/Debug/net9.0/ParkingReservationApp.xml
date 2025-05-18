@@ -1,0 +1,208 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ParkingReservationApp</name>
+    </assembly>
+    <members>
+        <member name="T:ParkingReservationApp.Controllers.UserController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ParkingReservationApp.Data.ApplicationDbContext">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ParkingReservationApp.Migrations.InitialCreate">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingReservationApp.Migrations.InitialCreate.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingReservationApp.Migrations.InitialCreate.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingReservationApp.Migrations.InitialCreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ParkingReservationApp.Migrations.Create">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingReservationApp.Migrations.Create.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingReservationApp.Migrations.Create.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingReservationApp.Migrations.Create.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ParkingReservationApp.Models.ApplicationRole">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ParkingReservationApp.Models.Car">
+            <summary>
+            Represents a user's car with a licence plate.
+            </summary>
+        </member>
+        <member name="T:ParkingReservationApp.Models.EnumExtensions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ParkingReservationApp.Models.EnumExtensions.GetDisplayName(System.Enum)">
+            <summary>
+            
+            </summary>
+            <param name="enumValue"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ParkingReservationApp.Models.PaginatedResult`1">
+            <summary>
+            A paged subset of a collection of items of type T, plus pagination metadata.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="T:ParkingReservationApp.Repositories.IUserRepository">
+            <summary>
+            Repository interface for managing application users.
+            </summary>
+        </member>
+        <member name="M:ParkingReservationApp.Repositories.IUserRepository.GetAllUsers">
+            <summary>
+            Retrieves all users.
+            </summary>
+        </member>
+        <member name="M:ParkingReservationApp.Repositories.IUserRepository.GetUserByEmail(System.String)">
+            <summary>
+            Finds a user by their email address.
+            </summary>
+        </member>
+        <member name="M:ParkingReservationApp.Repositories.IUserRepository.GetUserByUsername(System.String)">
+            <summary>
+            Finds a user by their id.
+            </summary>
+        </member>
+        <member name="M:ParkingReservationApp.Repositories.IUserRepository.FindUsersByRole(ParkingReservationApp.Models.UserRole)">
+            <summary>
+            
+            </summary>
+            <param name="role"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ParkingReservationApp.Repositories.IUserRepository.AddUser(ParkingReservationApp.Models.ApplicationUser)">
+            <summary>
+            Add a new user.
+            </summary>
+        </member>
+        <member name="M:ParkingReservationApp.Repositories.IUserRepository.UpdateUser(ParkingReservationApp.Models.ApplicationUser)">
+            <summary>
+            Updates an existing user.
+            </summary>
+        </member>
+        <member name="M:ParkingReservationApp.Repositories.IUserRepository.DeleteUserAsync(System.String)">
+            <summary>
+            Deletes a user by ID.
+            </summary>
+        </member>
+        <member name="M:ParkingReservationApp.Repositories.IUserRepository.UserExists(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="emailOrId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ParkingReservationApp.Repositories.IUserRepository.GetUsersPagedAsync(System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="pageNumber"></param>
+            <param name="pageSize"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ParkingReservationApp.Repositories.IUserRepository.SaveChangesAsync">
+            <summary>
+            Persists changes to the data store
+            </summary>
+        </member>
+        <member name="T:ParkingReservationApp.Repositories.UserRepository">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ParkingReservationApp.Repositories.UserRepository.#ctor(ParkingReservationApp.Data.ApplicationDbContext)">
+            <summary>
+             Repository implementation for managing application users.
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:ParkingReservationApp.Repositories.UserRepository.GetAllUsers">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ParkingReservationApp.Repositories.UserRepository.GetUserByEmail(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="email"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ParkingReservationApp.Repositories.UserRepository.GetUserByUsername(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ParkingReservationApp.Repositories.UserRepository.FindUsersByRole(ParkingReservationApp.Models.UserRole)">
+            <summary>
+            Finds and retrieves a collection of users assigned to a specific user role.
+            </summary>
+            <param name="userRole">The role to filter users by.</param>
+            <returns>A collection of users associated with the specified role.</returns>
+        </member>
+        <member name="M:ParkingReservationApp.Repositories.UserRepository.AddUser(ParkingReservationApp.Models.ApplicationUser)">
+            <summary>
+            
+            </summary>
+            <param name="user"></param>
+        </member>
+        <member name="M:ParkingReservationApp.Repositories.UserRepository.UpdateUser(ParkingReservationApp.Models.ApplicationUser)">
+            <summary>
+            
+            </summary>
+            <param name="user"></param>
+        </member>
+        <member name="M:ParkingReservationApp.Repositories.UserRepository.DeleteUserAsync(System.String)">
+            <summary>
+            Deletes a user by ID. Changes must be persisted with SaveChangesAsync.
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="M:ParkingReservationApp.Repositories.UserRepository.GetUsersPagedAsync(System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="pageNumber"></param>
+            <param name="pageSize"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+        </member>
+        <member name="M:ParkingReservationApp.Repositories.UserRepository.SaveChangesAsync">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:ParkingReservationApp.Services.IUserService">
+            <summary>
+            
+            </summary>
+        </member>
+    </members>
+</doc>

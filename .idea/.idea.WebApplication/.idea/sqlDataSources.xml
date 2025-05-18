@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DdlMappings">
+    <mapping uuid="47665bc9-67bb-4f0b-9edf-77e857234fc9" name="parking.db">
+      <data-sources db="d2e81a22-a084-4426-bb1f-475b3d39cc38" />
+    </mapping>
+  </component>
+</project>

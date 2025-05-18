@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "DVW//14zIJY9MeF2K7ZQ5AS17vpGuMt2SQonmsAwGjk=",
+  "Source": "ParkingReservationApp",
+  "BasePath": "_content/ParkingReservationApp",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
