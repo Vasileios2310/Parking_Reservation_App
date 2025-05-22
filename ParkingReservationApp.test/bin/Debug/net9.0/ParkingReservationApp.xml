@@ -4,6 +4,16 @@
         <name>ParkingReservationApp</name>
     </assembly>
     <members>
+        <member name="T:ParkingReservationApp.Controllers.ParkingSpaceController">
+            <summary>
+            Provides API endpoints for managing parking spaces.
+            </summary>
+            <remarks>
+            This controller handles operations such as retrieving all parking spaces,
+            retrieving parking spaces by parking lot ID, retrieving a parking space by its unique ID,
+            creating a new parking space, and deleting an existing parking space.
+            </remarks>
+        </member>
         <member name="T:ParkingReservationApp.Controllers.UserController">
             <summary>
             
@@ -14,10 +24,26 @@
             
             </summary>
         </member>
+        <member name="T:ParkingReservationApp.Data.ApplicationDbContextFactory">
+            <summary>
+            A factory class used to create instances of <see cref="T:ParkingReservationApp.Data.ApplicationDbContext"/> at design time.
+            Implements the <see cref="T:Microsoft.EntityFrameworkCore.Design.IDesignTimeDbContextFactory`1"/> interface to enable tools like Entity Framework migrations
+            to generate and configure the database context outside of the application runtime.
+            </summary>
+        </member>
         <member name="T:ParkingReservationApp.DTOs.ParkingDto">
             <summary>
             
             </summary>
+        </member>
+        <member name="T:ParkingReservationApp.DTOs.ParkingSpaceDto">
+            <summary>
+            Represents a Data Transfer Object (DTO) for a parking space.
+            </summary>
+            <remarks>
+            This class is used to encapsulate data related to a parking space including
+            its unique identifier, availability status, space number, and associated parking entity identifier.
+            </remarks>
         </member>
         <member name="T:ParkingReservationApp.Migrations.InitialCreate">
             <inheritdoc />
@@ -41,6 +67,18 @@
             <inheritdoc />
         </member>
         <member name="M:ParkingReservationApp.Migrations.Create.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ParkingReservationApp.Migrations.UpdateParkingSpaceModel">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingReservationApp.Migrations.UpdateParkingSpaceModel.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingReservationApp.Migrations.UpdateParkingSpaceModel.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingReservationApp.Migrations.UpdateParkingSpaceModel.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
         <member name="T:ParkingReservationApp.Models.ApplicationRole">
@@ -74,6 +112,11 @@
         <member name="T:ParkingReservationApp.Models.Parking">
             <summary>
             
+            </summary>
+        </member>
+        <member name="T:ParkingReservationApp.Models.ParkingSpace">
+            <summary>
+            Represents a parking space within a parking facility.
             </summary>
         </member>
         <member name="T:ParkingReservationApp.Repositories.IParkingRepository">
@@ -224,6 +267,11 @@
             
             </summary>
         </member>
+        <member name="T:ParkingReservationApp.Services.IParkingSpaceService">
+            <summary>
+            Defines the contract for the service responsible for managing parking spaces.
+            </summary>
+        </member>
         <member name="T:ParkingReservationApp.Services.IUserService">
             <summary>
             
@@ -233,6 +281,17 @@
             <summary>
             
             </summary>
+        </member>
+        <member name="T:ParkingReservationApp.Services.ParkingSpaceService">
+            <summary>
+            Provides services for managing parking spaces.
+            </summary>
+            <remarks>
+            This service provides functionality to perform CRUD (Create, Read, Delete)
+            operations for parking spaces. It interacts with the data repository to fetch,
+            create, or delete parking space records. Additionally, data transfer objects
+            (DTOs) are used to handle input and output between the service and its clients.
+            </remarks>
         </member>
     </members>
 </doc>

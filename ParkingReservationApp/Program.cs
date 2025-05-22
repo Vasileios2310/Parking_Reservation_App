@@ -30,7 +30,9 @@ public class Program
         builder.Services.AddScoped<IUserService, UserService>();
         builder.Services.AddScoped<IParkingService, ParkingService>();
         builder.Services.AddScoped<IParkingRepository, ParkingRepository>();
-
+        builder.Services.AddScoped<IParkingSpaceRepository, ParkingSpaceRepository>();
+        builder.Services.AddScoped<IParkingSpaceService, ParkingSpaceService>();
+        
         builder.Services.Configure<IdentityOptions>(options =>
         {
             // Password settings.

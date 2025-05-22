@@ -21,6 +21,7 @@
     &lt;TestId&gt;xUnit::3B2B7551-64C4-42C2-A5ED-BD330AACFDBA::net9.0::ParkingReservationApp.test.ParkingRepositoryTest.Delete_RemoveParking&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::3B2B7551-64C4-42C2-A5ED-BD330AACFDBA::net9.0::ParkingReservationApp.test.ParkingServiceTest.GetAllParkings_ReturnsMapperDtos&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::3B2B7551-64C4-42C2-A5ED-BD330AACFDBA::net9.0::ParkingReservationApp.test.ParkingServiceTest&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::3B2B7551-64C4-42C2-A5ED-BD330AACFDBA::net9.0::ParkingReservationApp.test.ParkingSpaceServiceTest&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String>
 	</wpf:ResourceDictionary>

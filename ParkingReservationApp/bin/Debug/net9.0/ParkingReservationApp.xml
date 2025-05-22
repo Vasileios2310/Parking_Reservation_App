@@ -4,6 +4,16 @@
         <name>ParkingReservationApp</name>
     </assembly>
     <members>
+        <member name="T:ParkingReservationApp.Controllers.ParkingSpaceController">
+            <summary>
+            Provides API endpoints for managing parking spaces.
+            </summary>
+            <remarks>
+            This controller handles operations such as retrieving all parking spaces,
+            retrieving parking spaces by parking lot ID, retrieving a parking space by its unique ID,
+            creating a new parking space, and deleting an existing parking space.
+            </remarks>
+        </member>
         <member name="T:ParkingReservationApp.Controllers.UserController">
             <summary>
             
@@ -257,6 +267,11 @@
             
             </summary>
         </member>
+        <member name="T:ParkingReservationApp.Services.IParkingSpaceService">
+            <summary>
+            Defines the contract for the service responsible for managing parking spaces.
+            </summary>
+        </member>
         <member name="T:ParkingReservationApp.Services.IUserService">
             <summary>
             
@@ -266,6 +281,17 @@
             <summary>
             
             </summary>
+        </member>
+        <member name="T:ParkingReservationApp.Services.ParkingSpaceService">
+            <summary>
+            Provides services for managing parking spaces.
+            </summary>
+            <remarks>
+            This service provides functionality to perform CRUD (Create, Read, Delete)
+            operations for parking spaces. It interacts with the data repository to fetch,
+            create, or delete parking space records. Additionally, data transfer objects
+            (DTOs) are used to handle input and output between the service and its clients.
+            </remarks>
         </member>
     </members>
 </doc>
