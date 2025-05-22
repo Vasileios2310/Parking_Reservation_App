@@ -6,7 +6,7 @@ namespace ParkingReservationApp.Repositories;
 /// <summary>
 /// 
 /// </summary>
-public class ParkingRepository : IParkingReposiotry
+public class ParkingRepository : IParkingRepository
 {
     private readonly ApplicationDbContext _context;
 
@@ -33,5 +33,5 @@ public class ParkingRepository : IParkingReposiotry
         }
     }
 
-    public Task SaveChanges() => _context.SaveChangesAsync();
+    public Task SaveChangesAsync() => _context.SaveChangesAsync();
 }

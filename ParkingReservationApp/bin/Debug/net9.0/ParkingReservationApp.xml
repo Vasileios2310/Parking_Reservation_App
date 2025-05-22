@@ -14,6 +14,11 @@
             
             </summary>
         </member>
+        <member name="T:ParkingReservationApp.DTOs.ParkingDto">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ParkingReservationApp.Migrations.InitialCreate">
             <inheritdoc />
         </member>
@@ -65,6 +70,16 @@
             A paged subset of a collection of items of type T, plus pagination metadata.
             </summary>
             <typeparam name="T"></typeparam>
+        </member>
+        <member name="T:ParkingReservationApp.Models.Parking">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ParkingReservationApp.Repositories.IParkingRepository">
+            <summary>
+            
+            </summary>
         </member>
         <member name="T:ParkingReservationApp.Repositories.IUserRepository">
             <summary>
@@ -126,6 +141,11 @@
         <member name="M:ParkingReservationApp.Repositories.IUserRepository.SaveChangesAsync">
             <summary>
             Persists changes to the data store
+            </summary>
+        </member>
+        <member name="T:ParkingReservationApp.Repositories.ParkingRepository">
+            <summary>
+            
             </summary>
         </member>
         <member name="T:ParkingReservationApp.Repositories.UserRepository">
@@ -199,7 +219,17 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:ParkingReservationApp.Services.IParkingService">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ParkingReservationApp.Services.IUserService">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ParkingReservationApp.Services.ParkingService">
             <summary>
             
             </summary>

@@ -29,7 +29,7 @@ public class Program
 
         builder.Services.AddScoped<IUserService, UserService>();
         builder.Services.AddScoped<IParkingService, ParkingService>();
-        builder.Services.AddScoped<IParkingReposiotry, ParkingRepository>();
+        builder.Services.AddScoped<IParkingRepository, ParkingRepository>();
 
         builder.Services.Configure<IdentityOptions>(options =>
         {

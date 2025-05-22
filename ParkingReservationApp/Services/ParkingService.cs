@@ -9,10 +9,10 @@ namespace ParkingReservationApp.Services;
 /// </summary>
 public class ParkingService : IParkingService
 {
-    private readonly IParkingReposiotry _parkingRepository;
+    private readonly IParkingRepository _parkingRepository;
     private readonly IMapper _mapper;
     
-    public ParkingService(IParkingReposiotry parkingRepository, IMapper mapper)
+    public ParkingService(IParkingRepository parkingRepository, IMapper mapper)
     {
         _parkingRepository = parkingRepository;
         _mapper = mapper;
@@ -40,13 +40,13 @@ public class ParkingService : IParkingService
     {
         var parking = _mapper.Map<Parking>(parkingDto);
         await _parkingRepository.Add(parking);
-        await _parkingRepository.SaveChanges();
+        await _parkingRepository.SaveChangesAsync();
         return _mapper.Map<ParkingDto>(parking);
     }
 
     public async Task DeleteParking(int id)
     {
         await _parkingRepository.Delete(id);
-        await _parkingRepository.SaveChanges();
+        await _parkingRepository.SaveChangesAsync();
     }
 }
