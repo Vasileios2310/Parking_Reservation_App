@@ -1,5 +1,8 @@
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ParkingReservationApp.DTOs;
+using ParkingReservationApp.Models;
 using ParkingReservationApp.Services;
 
 namespace ParkingReservationApp.Controllers;
@@ -12,13 +15,18 @@ namespace ParkingReservationApp.Controllers;
 public class UserController : ControllerBase
 {
     private readonly IUserService _userService;
+    private readonly UserManager<ApplicationUser> _userManager;
+    private readonly IEmailService _emailService;
 
-    public UserController(IUserService userService)
+    public UserController(IUserService userService , UserManager<ApplicationUser> userManager , IEmailService emailService)
     {
         _userService = userService;
+        _userManager = userManager;
+        _emailService = emailService;
     }
 
-    [HttpGet]
+    [Authorize(Roles = "Admin")]
+    [HttpGet("all")]
     public async Task<IActionResult> GetAll()
     {
         var users = await _userService.GetAllUsers();
@@ -58,6 +66,7 @@ public class UserController : ControllerBase
      return Ok(result);
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(string id)
     {
@@ -75,4 +84,42 @@ public class UserController : ControllerBase
         }
         return Ok("Password updated");
     }
+
+    [HttpGet("confirm-email")]
+    public async Task<IActionResult> ConfirmEmail(string userId, string token)
+    {
+        var user = await _userManager.FindByIdAsync(userId);
+        if (user == null) return NotFound();
+        var result = await _userManager.ConfirmEmailAsync(user, token);
+        return result.Succeeded ? Ok("Email Confirmed") : BadRequest("Invalid token");
+    }
+
+    [HttpGet("forgot-password")]
+    public async Task<IActionResult> ForgotPassword([FromBody] string email)
+    {
+        var user = await _userManager.FindByEmailAsync(email);
+        if (user == null || (!await _userManager.IsEmailConfirmedAsync(user)))
+            return BadRequest("Invalid email or not confirmed");
+        
+        var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+        var resetLink = $"https://yourfrontend.com/reset-password?userId={user.Id}&token={Uri.EscapeDataString(token)}";
+        
+        await _emailService.SendEmailAsync(email, "Reset Password", $"Please reset your password by clicking <a href='{resetLink}'>here</a>.");
+        
+        return Ok("Email sent");
+    }
+    
+    [HttpPost("reset-password")]
+    public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto dto)
+    {
+        var user = await _userManager.FindByIdAsync(dto.UserId);
+        if (user == null) return BadRequest("User not found.");
+
+        var result = await _userManager.ResetPasswordAsync(user, dto.Token, dto.NewPassword);
+        if (!result.Succeeded)
+            return BadRequest(result.Errors.Select(e => e.Description));
+
+        return Ok("Password has been reset.");
+    }
+
 }

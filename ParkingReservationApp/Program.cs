@@ -40,6 +40,8 @@ public class Program
         builder.Services.AddScoped<IEmailService, EmailService>();
         builder.Services.AddScoped<IUserRepository, UserRepository>();
         builder.Services.AddHostedService<ReservationNotifierService>();
+        builder.Services.AddScoped<IEmailService, EmailService>(); // or mock/stub
+
 
         builder.Services.Configure<IdentityOptions>(options =>
         {
@@ -50,6 +52,9 @@ public class Program
             options.Password.RequireUppercase = true;
             options.Password.RequiredLength = 8;
             options.Password.RequiredUniqueChars = 2;
+            options.Lockout.MaxFailedAccessAttempts = 5;
+            options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
+            options.SignIn.RequireConfirmedEmail = true;
         });
 
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -66,6 +71,7 @@ public class Program
         app.UseHttpsRedirection();
 
         app.UseAuthorization();
+        app.UseAuthentication();
         
         app.Run();
         

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ParkingReservationApp.DTOs;
 using ParkingReservationApp.Services;
@@ -64,6 +65,7 @@ public class ParkingSpaceController : ControllerBase
         }
     }
     
+    [Authorize(Roles = "Admin")]
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ParkingReservationApp.DTOs;
 using ParkingReservationApp.Services;
@@ -44,6 +45,7 @@ public class ParkingController : ControllerBase
         return Ok(parking);
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] ParkingDto parkingDto)
     {
@@ -51,6 +53,7 @@ public class ParkingController : ControllerBase
         return Ok(parking);
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {

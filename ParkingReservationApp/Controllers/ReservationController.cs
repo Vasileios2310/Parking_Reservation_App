@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ParkingReservationApp.DTOs;
 using ParkingReservationApp.Services;
@@ -23,6 +24,7 @@ public class ReservationController : ControllerBase
     _reservationService = reservationService;
   }
 
+  [Authorize(Roles = "Admin")]
   [HttpGet]
   public async Task<IActionResult> GetAll()
   {

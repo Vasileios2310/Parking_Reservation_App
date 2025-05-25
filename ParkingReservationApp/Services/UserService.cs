@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Identity;
 using ParkingReservationApp.DTOs;
 using ParkingReservationApp.Models;
 using ParkingReservationApp.Repositories;
+using ParkingReservationApp.Services;
+
 
 namespace ParkingReservationApp.Services;
 
@@ -12,16 +14,20 @@ public class UserService : IUserService
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly SignInManager<ApplicationUser> _signInManager;
     private readonly IMapper _mapper;
+    private readonly IEmailService _emailService;
+    
 
     public UserService(IUserRepository userRepository, 
                         UserManager<ApplicationUser> userManager,
                         SignInManager<ApplicationUser> signInManager,
-                        IMapper mapper)
+                        IMapper mapper,
+                        IEmailService emailService)
     {
         _userRepository = userRepository;
         _userManager = userManager;
         _signInManager = signInManager;
         _mapper = mapper;
+        _emailService = emailService;
     }
 
     public async Task<IEnumerable<UserDto>> GetAllUsers()
@@ -72,11 +78,6 @@ public class UserService : IUserService
 
     public async Task<UserDto> Register(RegisterRequestDto registerRequestDto)
     {
-        if (registerRequestDto == null)
-        {
-            throw new ArgumentNullException(nameof(registerRequestDto));
-        }
-
         var user = new ApplicationUser
         {
             Firstname = registerRequestDto.Firstname,
@@ -84,20 +85,24 @@ public class UserService : IUserService
             Email = registerRequestDto.Email,
             UserName = registerRequestDto.Email
         };
-        
-        var result = await _userManager.CreateAsync(user , registerRequestDto.Password);
+
+        var result = await _userManager.CreateAsync(user, registerRequestDto.Password);
         if (!result.Succeeded)
-        {
-            var errors = string.Join(", ", result.Errors.Select(e => e.Description));
-            throw new Exception($"Registration failed: {errors}");
-        }
-        
-        user.Cars = registerRequestDto.LicencePlates
-                .Select(lp => new Car {LicencePlate = lp , UserId = user.Id}).ToList();
-        
-        await _userRepository.SaveChangesAsync();
+            throw new Exception("User creation failed: " + string.Join(", ", result.Errors.Select(e => e.Description)));
+
+        // Assign default role
+        await _userManager.AddToRoleAsync(user, "Customer");
+
+        // Generate confirmation token
+        var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+        var confirmationLink = $"https://yourfrontend.com/confirm-email?userId={user.Id}&token={Uri.EscapeDataString(token)}";
+
+        // Send email (assumes IEmailService is implemented)
+        await _emailService.SendEmailAsync(user.Email, "Confirm your account", $"Click to confirm: {confirmationLink}");
+
         return _mapper.Map<UserDto>(user);
     }
+
 
     public async Task<UserDto?> GetByEmail(string email)
     {

@@ -16,6 +16,12 @@ public class CarService : ICarService
     private readonly IMapper _mapper;
     private readonly ApplicationDbContext _context;
     private readonly IHttpContextAccessor _httpContextAccessor;
+    private string? GetCurrentUserId()
+    {
+        return _httpContextAccessor.HttpContext?.User?.FindFirst("sub")?.Value
+               ?? _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+    }
+
     
     public CarService(ICarRepository carRepository, IMapper mapper, ApplicationDbContext context , IHttpContextAccessor httpContextAccessor)
     {
@@ -33,6 +39,10 @@ public class CarService : ICarService
     public async Task<CarDto?> GetById(int id)
     {
         var car = await _carRepository.GetById(id);
+        var currentUserId = GetCurrentUserId();
+        if (car == null || car.UserId != currentUserId)
+            return null;
+        
         return _mapper.Map<CarDto?>(car);
     }
 
@@ -44,22 +54,35 @@ public class CarService : ICarService
 
     public async Task<CarDto> Create(CarDto dto)
     {
+        var currentUserId = GetCurrentUserId();
+
+        if (dto.UserId != currentUserId)
+            throw new UnauthorizedAccessException("Invalid user assignment.");
+
         var existing = await _carRepository.GetByPlate(dto.LicencePlate);
         if (existing != null)
-            throw new Exception("Car already exists");
-        
+            throw new Exception("Car already exists.");
+
         var car = _mapper.Map<Car>(dto);
         await _carRepository.Add(car);
         await _carRepository.SaveChangesAsync();
-        
+
         return _mapper.Map<CarDto>(car);
     }
 
+
     public async Task Delete(int id)
     {
+        var car = await _carRepository.GetById(id);
+        var currentUserId = GetCurrentUserId();
+
+        if (car == null || car.UserId != currentUserId)
+            throw new UnauthorizedAccessException("Not your car.");
+
         await _carRepository.Delete(id);
         await _carRepository.SaveChangesAsync();
     }
+
     
     public async Task<bool> PlateExists(string plate)
     {
@@ -76,22 +99,27 @@ public class CarService : ICarService
     public async Task<CarDto> Update(CarDto dto)
     {
         var existing = await _carRepository.GetById(dto.Id);
-        if (existing == null) throw new Exception("Car not found.");
+        var currentUserId = GetCurrentUserId();
 
-        // Check for plate conflicts if needed
+        if (existing == null)
+            throw new Exception("Car not found.");
+
+        if (existing.UserId != currentUserId)
+            throw new UnauthorizedAccessException("Access denied.");
+
         if (existing.LicencePlate != dto.LicencePlate)
         {
             var plateInUse = await _carRepository.GetByPlate(dto.LicencePlate);
-            if (plateInUse != null) throw new Exception("Licence plate already exists.");
+            if (plateInUse != null)
+                throw new Exception("Licence plate already exists.");
         }
 
         existing.LicencePlate = dto.LicencePlate;
-        existing.UserId = dto.UserId;
 
         await _carRepository.SaveChangesAsync();
-
         return _mapper.Map<CarDto>(existing);
     }
+
 
     public async Task DeleteAllByUser(string userId)
     {

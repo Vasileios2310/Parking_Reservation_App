@@ -16,25 +16,27 @@ public class AppInitializer
         foreach (var role in roles)
         {
             if(!await roleManager.RoleExistsAsync(role))
-                await roleManager.CreateAsync(new IdentityRole(role));
+                await roleManager.CreateAsync(new ApplicationRole {Name = role});
         }
 
         var adminEmail = "admin@admin.com";
         var adminUser = await userManager.FindByEmailAsync(adminEmail);
+        
         if(adminUser == null)
         {
-            var admin = new ApplicationUser
+            var user = new ApplicationUser
             {
                 Email = adminEmail,
                 UserName = adminEmail,
                 Firstname = "Super",
-                Lastname = "Admin"
+                Lastname = "Admin",
+                EmailConfirmed = true
             };
             
-            var result = await userManager.CreateAsync(admin, "Admin123!");
+            var result = await userManager.CreateAsync(user, "Admin123!");
             if(result.Succeeded)
             {
-                await userManager.AddToRoleAsync(admin, "Admin");
+                await userManager.AddToRoleAsync(user, "Admin");
             }
         }
     }

@@ -94,7 +94,7 @@ public class CarController : ControllerBase
             return BadRequest(e.Message);
         }
     }
-
+    
     
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
@@ -109,7 +109,7 @@ public class CarController : ControllerBase
         await _carService.Delete(id);
         return NoContent();
     }
-
+    
     [HttpDelete("user/{userId}/all")]
     public async Task<IActionResult> DeleteAllByUser(string userId)
     {
@@ -135,5 +135,4 @@ public class CarController : ControllerBase
     }
     
     
-
 }
