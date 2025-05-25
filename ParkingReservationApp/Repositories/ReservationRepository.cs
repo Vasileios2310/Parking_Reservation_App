@@ -49,4 +49,15 @@ public class ReservationRepository : IReservationRepository
     }
 
     public Task SaveChangesAsync() => _context.SaveChangesAsync();
+    
+    public async Task<IEnumerable<Reservation>> GetAllWithUserAndCar()
+    {
+        return await _context.Reservations
+            .Include(r => r.User)
+            .Include(r => r.Car)
+            .Include(r => r.ParkingSpace)
+            .ThenInclude(ps => ps.Parking)
+            .Where(r => r.StartTime > DateTime.UtcNow.AddHours(-1)) // optional filter for optimization
+            .ToListAsync();
+    }
 }

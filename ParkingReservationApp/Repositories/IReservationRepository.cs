@@ -13,4 +13,7 @@ public interface IReservationRepository
     Task Add(Reservation reservation);
     Task Delete(int id);
     Task SaveChangesAsync();
+    
+    Task<IEnumerable<Reservation>> GetAllWithUserAndCar();
+
 }

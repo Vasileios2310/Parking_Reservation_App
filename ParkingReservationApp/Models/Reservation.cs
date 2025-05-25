@@ -31,4 +31,10 @@ public class Reservation
     public Car Car { get; set; }
     
     public bool IsPaid { get; set; }
+    
+    public bool IsStartNotified { get; set; } = false;
+    public bool IsEndNotified { get; set; } = false;
+    
+    public bool IsOverdue { get; set; } = false;
+    public bool IsOverdueCharged { get; set; } = false;
 }
