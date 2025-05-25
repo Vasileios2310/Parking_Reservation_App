@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using ParkingReservationApp.Background;
 using ParkingReservationApp.Data;
 using ParkingReservationApp.Mapper;
 using ParkingReservationApp.Models;
@@ -34,6 +35,7 @@ public class Program
         builder.Services.AddScoped<IParkingSpaceService, ParkingSpaceService>();
         builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
         builder.Services.AddScoped<IReservationService, ReservationService>();
+        builder.Services.AddHostedService<ReservationNotifierService>();
 
 
         builder.Services.Configure<IdentityOptions>(options =>
