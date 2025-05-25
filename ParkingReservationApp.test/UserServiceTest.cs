@@ -141,4 +141,38 @@ public class UserServiceTest
         Assert.NotNull(result);
         Assert.Equal(userDto.Email, result.Email);
     }
+
+    [Fact]
+    public async Task Register_Should_Create_User_And_SendConfirmationEmail()
+    {
+        // Arrange
+        var registerDto = new RegisterRequestDto
+        {
+            Firstname = "John",
+            Lastname = "Doe",
+            Email = "example@example.com",
+            Password = "P@ssw0rd!",
+            LicencePlates = new List<string> { "ABC123", "DEF456" }
+        };
+
+        _userManagerMock.Setup(x => x.CreateAsync(It.IsAny<ApplicationUser>(), registerDto.Password))
+            .ReturnsAsync(IdentityResult.Success);
+        _userManagerMock.Setup(x => x.GenerateEmailConfirmationTokenAsync(It.IsAny<ApplicationUser>()))
+            .ReturnsAsync("token123");
+        _emailServiceMock.Setup(x => x.SendEmailAsync(registerDto.Email, It.IsAny<string>(), It.IsAny<string>()))
+            .Returns(Task.CompletedTask);
+        _mapperMock.Setup(m => m.Map<UserDto>(It.IsAny<ApplicationUser>()))
+            .Returns(new UserDto { Id = "U1", Email = registerDto.Email });
+
+        // Act
+        var result = await _userService.Register(registerDto);
+
+        // Assert
+        Assert.NotNull(result);
+        Assert.Equal("example@example.com", result.Email);
+        _userManagerMock.Verify(x => x.CreateAsync(It.IsAny<ApplicationUser>(), registerDto.Password), Times.Once);
+        _userManagerMock.Verify(x => x.GenerateEmailConfirmationTokenAsync(It.IsAny<ApplicationUser>()), Times.Once);
+        _emailServiceMock.Verify(x => x.SendEmailAsync(registerDto.Email, It.IsAny<string>(), It.Is<string>(body => body.Contains("confirm-email"))), Times.Once);
+        //_userRepositoryMock.Verify(x => x.SaveChangesAsync(), Times.Once);
+    }
 }
