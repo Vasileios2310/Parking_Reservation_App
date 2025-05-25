@@ -37,4 +37,7 @@ public class Reservation
     
     public bool IsOverdue { get; set; } = false;
     public bool IsOverdueCharged { get; set; } = false;
+    
+    public bool IsCancelled { get; set; } = false;
+
 }

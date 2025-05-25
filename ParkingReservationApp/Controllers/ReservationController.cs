@@ -26,7 +26,7 @@ public class ReservationController : ControllerBase
   [HttpGet]
   public async Task<IActionResult> GetAll()
   {
-    var reservations = _reservationService.GetAll();
+    var reservations = await _reservationService.GetAll();
     return Ok(reservations);
   }
 
@@ -92,5 +92,33 @@ public class ReservationController : ControllerBase
   {
     await _reservationService.Delete(id);
     return NoContent();
+  }
+  
+  [HttpPost("pay")]
+  public async Task<IActionResult> Pay([FromBody] ReservationPaymentDto dto)
+  {
+    try
+    {
+      var success = await _reservationService.PayForReservation(dto);
+      return success ? Ok("Payment successful") : BadRequest("Already paid or invalid reservation.");
+    }
+    catch (Exception ex)
+    {
+      return BadRequest(ex.Message);
+    }
+  }
+
+  [HttpPost("cancel/{id}")]
+  public async Task<IActionResult> Cancel(int id)
+  {
+    try
+    {
+      var success = await _reservationService.CancelReservation(id);
+      return success ? Ok("Reservation cancelled") : BadRequest("Reservation cannot be cancelled.");
+    }
+    catch (Exception ex)
+    {
+      return BadRequest(ex.Message);
+    }
   }
 }

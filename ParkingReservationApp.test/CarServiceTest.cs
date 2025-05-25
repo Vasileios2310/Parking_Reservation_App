@@ -1,6 +1,8 @@
 using Moq;
 using Xunit;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
+using ParkingReservationApp.Data;
 using ParkingReservationApp.DTOs;
 using ParkingReservationApp.Models;
 using ParkingReservationApp.Repositories;
@@ -17,12 +19,18 @@ public class CarServiceTest
     private readonly Mock<ICarRepository> _repoMock;
     private readonly Mock<IMapper> _mapperMock;
     private readonly CarService _service;
+    private readonly Mock<ApplicationDbContext> _contextMock;
+    private readonly Mock<IHttpContextAccessor> _httpContextAccessorMock;
 
     public CarServiceTest()
     {
         _repoMock = new Mock<ICarRepository>();
         _mapperMock = new Mock<IMapper>();
-        _service = new CarService(_repoMock.Object, _mapperMock.Object);
+        _contextMock = new Mock<ApplicationDbContext>();
+        _httpContextAccessorMock = new Mock<IHttpContextAccessor>();
+        
+        _service = new CarService(_repoMock.Object, _mapperMock.Object, 
+            _contextMock.Object, _httpContextAccessorMock.Object);;
     }
 
     [Fact]
@@ -148,7 +156,7 @@ public class CarServiceTest
         repoMock.Setup(r => r.SaveChangesAsync()).Returns(Task.CompletedTask);
 
         var mapperMock = new Mock<IMapper>();
-        var service = new CarService(repoMock.Object, mapperMock.Object);
+        var service = new CarService(repoMock.Object, mapperMock.Object, _contextMock.Object, _httpContextAccessorMock.Object);;
 
         await service.DeletePermanent(1);
 
@@ -163,7 +171,7 @@ public class CarServiceTest
         repoMock.Setup(r => r.GetById(99)).ReturnsAsync((Car?)null);
 
         var mapperMock = new Mock<IMapper>();
-        var service = new CarService(repoMock.Object, mapperMock.Object);
+        var service = new CarService(repoMock.Object, mapperMock.Object , _contextMock.Object, _httpContextAccessorMock.Object);;;
 
         await Assert.ThrowsAsync<Exception>(() => service.DeletePermanent(99));
     }

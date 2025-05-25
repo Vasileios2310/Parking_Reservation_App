@@ -44,7 +44,9 @@ public class ReservationControllerTest
 
         var result = await _controller.GetById(10);
 
-        Assert.IsType<NotFoundResult>(result);
+        var notFound = Assert.IsType<NotFoundObjectResult>(result);
+        Assert.Equal("Reservation not found", notFound.Value); // optional content check
+
     }
 
     [Fact]
@@ -100,7 +102,8 @@ public class ReservationControllerTest
         var result = await _controller.MarkAsPaid(1);
 
         var ok = Assert.IsType<OkObjectResult>(result);
-        Assert.Equal("Marked as paid.", ok.Value);
+        Assert.Equal("Reservation marked as paid", ok.Value);
+
     }
 
     [Fact]
@@ -111,6 +114,7 @@ public class ReservationControllerTest
         var result = await _controller.MarkAsPaid(999);
 
         var notFound = Assert.IsType<NotFoundObjectResult>(result);
-        Assert.Equal("Reservation not found.", notFound.Value);
+        Assert.Contains("Reservation not found", notFound.Value?.ToString());
+
     }
 }

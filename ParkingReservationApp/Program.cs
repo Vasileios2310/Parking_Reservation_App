@@ -38,8 +38,7 @@ public class Program
         builder.Services.AddScoped<ICarRepository, CarRepository>();
         builder.Services.AddScoped<ICarService, CarService>();
         builder.Services.AddScoped<IEmailService, EmailService>();
-
-
+        builder.Services.AddScoped<IUserRepository, UserRepository>();
         builder.Services.AddHostedService<ReservationNotifierService>();
 
         builder.Services.Configure<IdentityOptions>(options =>

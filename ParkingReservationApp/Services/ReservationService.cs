@@ -1,4 +1,5 @@
 using AutoMapper;
+using ParkingReservationApp.Data;
 using ParkingReservationApp.DTOs;
 using ParkingReservationApp.Models;
 using ParkingReservationApp.Repositories;
@@ -13,11 +14,13 @@ public class ReservationService : IReservationService
 {
     private readonly IReservationRepository _reservationRepository;
     private readonly IMapper _mapper;
+    private readonly ApplicationDbContext _context;
 
-    public ReservationService(IReservationRepository reservationRepository, IMapper mapper)
+    public ReservationService(IReservationRepository reservationRepository, IMapper mapper , ApplicationDbContext context)
     {
         _reservationRepository = reservationRepository;
         _mapper = mapper;   
+        _context = context;
     }
 
     public async Task<IEnumerable<ReservationDto>> GetAll()
@@ -93,5 +96,58 @@ public class ReservationService : IReservationService
        res.IsPaid = true;
        await _reservationRepository.SaveChangesAsync();
        return true;
+    }
+    
+    public async Task<bool> PayForReservation(ReservationPaymentDto dto)
+    {
+        var reservation = await _reservationRepository.GetById(dto.ReservationId);
+        if (reservation == null || reservation.IsPaid || reservation.IsCancelled)
+            return false;
+
+        // Simulated card validation
+        if (dto.CreditCardNumber.Length < 12)
+            throw new Exception("Invalid card");
+
+        reservation.IsPaid = true;
+
+        _context.AuditLogs.Add(new AuditLog
+        {
+            Action = "Payment",
+            Entity = "Reservation",
+            Description = $"Paid reservation #{reservation.Id} with card ending in {dto.CreditCardNumber[^4..]}",
+            UserId = reservation.UserId,
+            Timestamp = DateTime.UtcNow
+        });
+
+        await _reservationRepository.SaveChangesAsync();
+        await _context.SaveChangesAsync();
+
+        return true;
+    }
+    
+    public async Task<bool> CancelReservation(int id)
+    {
+        var reservation = await _reservationRepository.GetById(id);
+        if (reservation == null || reservation.IsCancelled)
+            return false;
+
+        if (DateTime.UtcNow >= reservation.StartTime)
+            throw new Exception("Cannot cancel a reservation that already started.");
+
+        reservation.IsCancelled = true;
+
+        _context.AuditLogs.Add(new AuditLog
+        {
+            Action = "Cancel",
+            Entity = "Reservation",
+            Description = $"Cancelled reservation #{reservation.Id}",
+            UserId = reservation.UserId,
+            Timestamp = DateTime.UtcNow
+        });
+
+        await _reservationRepository.SaveChangesAsync();
+        await _context.SaveChangesAsync();
+
+        return true;
     }
 }

@@ -4,16 +4,17 @@
         <name>ParkingReservationApp</name>
     </assembly>
     <members>
-        <member name="T:ParkingReservationApp.Background.ReservationNotifierService">
-            <summary>
-            A background service that periodically checks reservations and sends notifications for reservations
-            starting within the next hour but not yet paid.
-            </summary>
-        </member>
         <member name="T:ParkingReservationApp.Controllers.CarController">
             <summary>
             
             </summary>
+        </member>
+        <member name="M:ParkingReservationApp.Controllers.CarController.HardDelete(System.Int32)">
+            <summary>
+            This ensures only users with the "Admin" role can access the endpoint.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
         </member>
         <member name="T:ParkingReservationApp.Controllers.ParkingSpaceController">
             <summary>
@@ -105,6 +106,42 @@
             <inheritdoc />
         </member>
         <member name="M:ParkingReservationApp.Migrations.UpdateParkingSpaceModel.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ParkingReservationApp.Migrations.AuditLog">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingReservationApp.Migrations.AuditLog.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingReservationApp.Migrations.AuditLog.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingReservationApp.Migrations.AuditLog.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ParkingReservationApp.Migrations.NotificationFlag">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingReservationApp.Migrations.NotificationFlag.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingReservationApp.Migrations.NotificationFlag.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingReservationApp.Migrations.NotificationFlag.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ParkingReservationApp.Migrations.AddOverdueFlag">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingReservationApp.Migrations.AddOverdueFlag.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingReservationApp.Migrations.AddOverdueFlag.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingReservationApp.Migrations.AddOverdueFlag.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
         <member name="T:ParkingReservationApp.Models.ApplicationRole">

@@ -18,5 +18,10 @@ public interface IReservationService
     Task<IEnumerable<ReservationDto>> GetByDateRange(DateTime start, DateTime end);
     Task<IEnumerable<ReservationDto>> GetUpcomingByUserId(string userId);
     Task<bool> MarkAsPaid(int reservationId);
+    
+    Task<bool> PayForReservation(ReservationPaymentDto paymentDto);
+    
+    Task<bool> CancelReservation(int id);
+
 
 }

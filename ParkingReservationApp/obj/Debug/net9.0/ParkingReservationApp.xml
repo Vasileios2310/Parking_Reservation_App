@@ -144,6 +144,18 @@
         <member name="M:ParkingReservationApp.Migrations.AddOverdueFlag.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
+        <member name="T:ParkingReservationApp.Migrations.Update">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingReservationApp.Migrations.Update.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingReservationApp.Migrations.Update.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingReservationApp.Migrations.Update.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
         <member name="T:ParkingReservationApp.Models.ApplicationRole">
             <summary>
             
