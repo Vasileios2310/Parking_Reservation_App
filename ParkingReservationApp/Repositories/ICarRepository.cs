@@ -10,4 +10,7 @@ public interface ICarRepository
     Task Add(Car car);
     Task Delete(int id);
     Task SaveChangesAsync();
+    
+    Task HardDelete(int id);
+
 }

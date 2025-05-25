@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ParkingReservationApp.DTOs;
 using ParkingReservationApp.Services;
@@ -7,6 +8,7 @@ namespace ParkingReservationApp.Controllers;
 /// <summary>
 /// 
 /// </summary>
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class CarController : ControllerBase
@@ -93,9 +95,17 @@ public class CarController : ControllerBase
         }
     }
 
+    
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
+        var car = await _carService.GetById(id);
+        if(car == null) return NotFound();
+        
+        var userId = User.FindFirst("sub")?.Value;
+        if(car.UserId != userId) 
+            return Forbid();
+        
         await _carService.Delete(id);
         return NoContent();
     }
@@ -110,4 +120,20 @@ public class CarController : ControllerBase
         }
         return NoContent();
     }
+    
+    /// <summary>
+    /// This ensures only users with the "Admin" role can access the endpoint.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [Authorize(Roles = "Admin")]
+    [HttpDelete("hard/{id}")]
+    public async Task<IActionResult> HardDelete(int id)
+    {
+        await _carService.DeletePermanent(id);
+        return NoContent();
+    }
+    
+    
+
 }

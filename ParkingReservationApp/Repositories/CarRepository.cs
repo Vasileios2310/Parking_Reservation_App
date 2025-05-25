@@ -15,9 +15,10 @@ public class CarRepository : ICarRepository
     }
 
     public async Task<IEnumerable<Car>> GetByUserId(string userId) =>
-        await _context.Cars.Where(c => c.UserId == userId).ToListAsync();
+        await _context.Cars.Where(c => c.UserId == userId && !c.IsDeleted).ToListAsync();
 
-    public async Task<Car?> GetById(int id) => await _context.Cars.FindAsync(id);
+    public async Task<Car?> GetById(int id) => await _context.Cars
+                                                    .FirstOrDefaultAsync(c => c.Id == id && !c.IsDeleted);
 
     public async Task<Car?> GetByPlate(string plate) => await _context.Cars.FirstOrDefaultAsync(c => c.LicencePlate == plate);
 
@@ -31,8 +32,21 @@ public class CarRepository : ICarRepository
     {
         var car = await _context.Cars.FindAsync(id);
         if (car != null)
-            _context.Cars.Remove(car);
+        {
+            car.IsDeleted = true;
+            await SaveChangesAsync();
+        }
     }
 
     public Task SaveChangesAsync() => _context.SaveChangesAsync();
+    
+    public async Task HardDelete(int id)
+    {
+        var car = await _context.Cars.IgnoreQueryFilters().FirstOrDefaultAsync(c => c.Id == id);
+        if (car != null)
+        {
+            _context.Cars.Remove(car);
+        }
+    }
+
 }

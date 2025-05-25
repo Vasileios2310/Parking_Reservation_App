@@ -136,4 +136,36 @@ public class CarServiceTest
         _repoMock.Verify(r => r.Delete(8), Times.Once);
         _repoMock.Verify(r => r.SaveChangesAsync(), Times.Once);
     }
+    
+    [Fact]
+    public async Task DeletePermanent_RemovesCar_IfExists()
+    {
+        var car = new Car { Id = 1 };
+
+        var repoMock = new Mock<ICarRepository>();
+        repoMock.Setup(r => r.GetById(1)).ReturnsAsync(car);
+        repoMock.Setup(r => r.HardDelete(1)).Returns(Task.CompletedTask);
+        repoMock.Setup(r => r.SaveChangesAsync()).Returns(Task.CompletedTask);
+
+        var mapperMock = new Mock<IMapper>();
+        var service = new CarService(repoMock.Object, mapperMock.Object);
+
+        await service.DeletePermanent(1);
+
+        repoMock.Verify(r => r.HardDelete(1), Times.Once);
+        repoMock.Verify(r => r.SaveChangesAsync(), Times.Once);
+    }
+
+    [Fact]
+    public async Task DeletePermanent_Throws_IfNotFound()
+    {
+        var repoMock = new Mock<ICarRepository>();
+        repoMock.Setup(r => r.GetById(99)).ReturnsAsync((Car?)null);
+
+        var mapperMock = new Mock<IMapper>();
+        var service = new CarService(repoMock.Object, mapperMock.Object);
+
+        await Assert.ThrowsAsync<Exception>(() => service.DeletePermanent(99));
+    }
+
 }

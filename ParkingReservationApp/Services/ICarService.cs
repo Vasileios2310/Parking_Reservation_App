@@ -14,5 +14,8 @@ public interface ICarService
     Task<int> CountByUser(string userId);
     Task<CarDto> Update(CarDto dto);
     Task DeleteAllByUser(string userId);
+    
+    Task DeletePermanent(int id);
+
 
 }

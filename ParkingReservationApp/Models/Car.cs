@@ -16,4 +16,6 @@ public class Car
     
     public string UserId { get; set; }
     public ApplicationUser User { get; set; }
+    
+    public bool IsDeleted { get; set; } = false;
 }

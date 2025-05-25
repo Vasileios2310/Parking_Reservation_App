@@ -97,4 +97,17 @@ public class CarService : ICarService
 
         await _carRepository.SaveChangesAsync();
     }
+    
+    public async Task DeletePermanent(int id)
+    {
+        var car = await _carRepository.GetById(id);
+        if (car == null) throw new Exception("Car not found.");
+        
+        await _carRepository.HardDelete(id);
+        await _carRepository.SaveChangesAsync();
+        
+        //await _carRepository.Delete(id); // <- normal delete
+        //await _carRepository.SaveChangesAsync();
+    }
+
 }

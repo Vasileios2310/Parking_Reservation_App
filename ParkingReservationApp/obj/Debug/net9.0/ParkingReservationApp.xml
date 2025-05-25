@@ -15,6 +15,13 @@
             
             </summary>
         </member>
+        <member name="M:ParkingReservationApp.Controllers.CarController.HardDelete(System.Int32)">
+            <summary>
+            This ensures only users with the "Admin" role can access the endpoint.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="T:ParkingReservationApp.Controllers.ParkingSpaceController">
             <summary>
             Provides API endpoints for managing parking spaces.
