@@ -22,31 +22,33 @@ public class UserServiceTest
     private readonly Mock<SignInManager<ApplicationUser>> _signInManagerMock;
     private readonly Mock<IMapper> _mapperMock;
     private readonly UserService _userService;
+    private readonly Mock<IEmailService> _emailServiceMock;
     
     public UserServiceTest()
     {
-        // Create a mock repository with no data
-        // This setup is required to create the UserService with mocked dependencies,
-        // so we can test it without touching the real database or authentication system.
         _userRepositoryMock = new Mock<IUserRepository>();
-        
+
         var storeMock = new Mock<IUserStore<ApplicationUser>>();
         _userManagerMock = new Mock<UserManager<ApplicationUser>>(
             storeMock.Object, null, null, null, null, null, null, null, null);
 
         var contextAccessorMock = new Mock<IHttpContextAccessor>();
-        var claimsFactoryMOck = new Mock<IUserClaimsPrincipalFactory<ApplicationUser>>();
+        var claimsFactoryMock = new Mock<IUserClaimsPrincipalFactory<ApplicationUser>>();
         _signInManagerMock = new Mock<SignInManager<ApplicationUser>>(
             _userManagerMock.Object,
-            contextAccessorMock.Object, 
-            claimsFactoryMOck.Object,
+            contextAccessorMock.Object,
+            claimsFactoryMock.Object,
             null, null, null, null);
-        
+
         _mapperMock = new Mock<IMapper>();
-        _userService = new UserService(_userRepositoryMock.Object, 
+        _emailServiceMock = new Mock<IEmailService>();
+
+        _userService = new UserService(
+            _userRepositoryMock.Object,
             _userManagerMock.Object,
             _signInManagerMock.Object,
-            _mapperMock.Object);
+            _mapperMock.Object,
+            _emailServiceMock.Object);
     }
     
     [Fact]
