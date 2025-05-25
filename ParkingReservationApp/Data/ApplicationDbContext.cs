@@ -12,6 +12,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
     public DbSet<Parking> Parkings { get; set; }
     public DbSet<ParkingSpace> ParkingSpaces { get; set; }
     public DbSet<Reservation> Reservations { get; set; }
+    public DbSet<AuditLog> AuditLogs { get; set; }
+
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 

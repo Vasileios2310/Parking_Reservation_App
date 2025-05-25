@@ -114,6 +114,18 @@
         <member name="M:ParkingReservationApp.Migrations.UpdateParkingSpaceModel.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
+        <member name="T:ParkingReservationApp.Migrations.AuditLog">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingReservationApp.Migrations.AuditLog.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingReservationApp.Migrations.AuditLog.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ParkingReservationApp.Migrations.AuditLog.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
         <member name="T:ParkingReservationApp.Models.ApplicationRole">
             <summary>
             

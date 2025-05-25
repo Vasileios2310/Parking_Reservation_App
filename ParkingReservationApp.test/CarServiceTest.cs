@@ -167,5 +167,4 @@ public class CarServiceTest
 
         await Assert.ThrowsAsync<Exception>(() => service.DeletePermanent(99));
     }
-
 }

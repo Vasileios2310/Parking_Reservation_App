@@ -11,7 +11,7 @@ namespace ParkingReservationApp;
 
 public class Program
 {
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
 
@@ -40,7 +40,6 @@ public class Program
 
         builder.Services.AddHostedService<ReservationNotifierService>();
 
-
         builder.Services.Configure<IdentityOptions>(options =>
         {
             // Password settings.
@@ -68,5 +67,11 @@ public class Program
         app.UseAuthorization();
         
         app.Run();
+        
+        using (var scope = app.Services.CreateScope())
+        {
+            var services = scope.ServiceProvider;
+            await AppInitializer.SeedRolesAndAdmin(services);
+        }
     }
 }

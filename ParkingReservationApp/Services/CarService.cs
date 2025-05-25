@@ -1,4 +1,6 @@
+using System.Security.Claims;
 using AutoMapper;
+using ParkingReservationApp.Data;
 using ParkingReservationApp.DTOs;
 using ParkingReservationApp.Models;
 using ParkingReservationApp.Repositories;
@@ -12,11 +14,15 @@ public class CarService : ICarService
 {
     private readonly ICarRepository _carRepository;
     private readonly IMapper _mapper;
+    private readonly ApplicationDbContext _context;
+    private readonly IHttpContextAccessor _httpContextAccessor;
     
-    public CarService(ICarRepository carRepository, IMapper mapper)
+    public CarService(ICarRepository carRepository, IMapper mapper, ApplicationDbContext context , IHttpContextAccessor httpContextAccessor)
     {
         _carRepository = carRepository;
         _mapper = mapper;
+        _context = context;
+        _httpContextAccessor = httpContextAccessor;
     }
     public async Task<IEnumerable<CarDto>> GetByUserId(string userId)
     {
@@ -102,12 +108,24 @@ public class CarService : ICarService
     {
         var car = await _carRepository.GetById(id);
         if (car == null) throw new Exception("Car not found.");
-        
+
         await _carRepository.HardDelete(id);
         await _carRepository.SaveChangesAsync();
-        
-        //await _carRepository.Delete(id); // <- normal delete
-        //await _carRepository.SaveChangesAsync();
+
+        var userId = _httpContextAccessor.HttpContext?.User?.FindFirst("sub")?.Value
+                     ?? _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value
+                     ?? "unknown";
+
+        _context.AuditLogs.Add(new AuditLog
+        {
+            Action = "Delete",
+            Entity = "Car",
+            Description = $"Car ID {id} permanently deleted.",
+            UserId = userId,
+            Timestamp = DateTime.UtcNow
+        });
+
+        await _context.SaveChangesAsync();
     }
 
 }
