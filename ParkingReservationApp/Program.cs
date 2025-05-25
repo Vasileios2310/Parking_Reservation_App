@@ -32,7 +32,10 @@ public class Program
         builder.Services.AddScoped<IParkingRepository, ParkingRepository>();
         builder.Services.AddScoped<IParkingSpaceRepository, ParkingSpaceRepository>();
         builder.Services.AddScoped<IParkingSpaceService, ParkingSpaceService>();
-        
+        builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
+        builder.Services.AddScoped<IReservationService, ReservationService>();
+
+
         builder.Services.Configure<IdentityOptions>(options =>
         {
             // Password settings.

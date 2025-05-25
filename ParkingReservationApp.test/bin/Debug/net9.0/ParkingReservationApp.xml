@@ -14,6 +14,16 @@
             creating a new parking space, and deleting an existing parking space.
             </remarks>
         </member>
+        <member name="T:ParkingReservationApp.Controllers.ReservationController">
+            <summary>
+            Handles reservation-related operations, including creating, retrieving, updating, and deleting reservations.
+            </summary>
+            <remarks>
+            This controller provides endpoints for managing reservations in the system. It interacts with the IReservationService
+            to perform operations such as retrieving all reservations, fetching reservation details by user, car, or parking space,
+            retrieving reservations within a specific date range, and marking reservations as paid.
+            </remarks>
+        </member>
         <member name="T:ParkingReservationApp.Controllers.UserController">
             <summary>
             
@@ -44,6 +54,11 @@
             This class is used to encapsulate data related to a parking space including
             its unique identifier, availability status, space number, and associated parking entity identifier.
             </remarks>
+        </member>
+        <member name="T:ParkingReservationApp.DTOs.ReservationDto">
+            <summary>
+            Represents a data transfer object for a parking reservation.
+            </summary>
         </member>
         <member name="T:ParkingReservationApp.Migrations.InitialCreate">
             <inheritdoc />
@@ -119,9 +134,19 @@
             Represents a parking space within a parking facility.
             </summary>
         </member>
+        <member name="T:ParkingReservationApp.Models.Reservation">
+            <summary>
+            Represents a parking reservation in the parking reservation application.
+            </summary>
+        </member>
         <member name="T:ParkingReservationApp.Repositories.IParkingRepository">
             <summary>
             
+            </summary>
+        </member>
+        <member name="T:ParkingReservationApp.Repositories.IReservationRepository">
+            <summary>
+            Interface for handling operations related to reservations within the application.
             </summary>
         </member>
         <member name="T:ParkingReservationApp.Repositories.IUserRepository">
@@ -189,6 +214,11 @@
         <member name="T:ParkingReservationApp.Repositories.ParkingRepository">
             <summary>
             
+            </summary>
+        </member>
+        <member name="T:ParkingReservationApp.Repositories.ReservationRepository">
+            <summary>
+            Provides methods for accessing and manipulating reservation data in the database.
             </summary>
         </member>
         <member name="T:ParkingReservationApp.Repositories.UserRepository">
@@ -272,6 +302,11 @@
             Defines the contract for the service responsible for managing parking spaces.
             </summary>
         </member>
+        <member name="T:ParkingReservationApp.Services.IReservationService">
+            <summary>
+            Defines the operations for managing parking space reservations.
+            </summary>
+        </member>
         <member name="T:ParkingReservationApp.Services.IUserService">
             <summary>
             
@@ -292,6 +327,12 @@
             create, or delete parking space records. Additionally, data transfer objects
             (DTOs) are used to handle input and output between the service and its clients.
             </remarks>
+        </member>
+        <member name="T:ParkingReservationApp.Services.ReservationService">
+            <summary>
+            Service responsible for managing parking reservations.
+            Provides methods to create, retrieve, delete, and manage reservations by various criteria such as user, car, parking space, or date range.
+            </summary>
         </member>
     </members>
 </doc>

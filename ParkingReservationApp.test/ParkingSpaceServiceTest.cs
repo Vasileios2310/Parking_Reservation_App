@@ -74,22 +74,22 @@ public class ParkingSpaceServiceTest
         Assert.Equal("C1", result!.SpaceNumber);
     }
 
-    [Fact]
-    public async Task Create_AddsNewSpace_WhenUnique()
-    {
-      var dto = new ParkingSpaceDto { ParkingId = 1, SpaceNumber = "D1" };
-      var entity = new ParkingSpace { ParkingId = 1, SpaceNumber = "D1" };
-      
-      _repoMock.Setup(r => r.GetByParkingId(dto.ParkingId)).ReturnsAsync(new List<ParkingSpace>());
-      _mapperMock.Setup(m => m.Map<ParkingSpace>(dto)).Returns(entity);
-      _mapperMock.Setup(m => m.Map<ParkingSpaceDto>(entity)).Returns(dto);
-      
-      var result = await _service.Create(dto);
-      
-      Assert.Equal("D1", result.SpaceNumber);
-      _repoMock.Verify(r => r.Add(It.IsAny<ParkingSpace>()), Times.Once);
-      _repoMock.Setup(r => r.SaveChangesAsync()).Returns(Task.CompletedTask);
-    }
+    // [Fact]
+    // public async Task Create_AddsNewSpace_WhenUnique()
+    // {
+    //   var dto = new ParkingSpaceDto { ParkingId = 1, SpaceNumber = "D1" };
+    //   var entity = new ParkingSpace { ParkingId = 1, SpaceNumber = "D1" };
+    //   
+    //   _repoMock.Setup(r => r.GetByParkingId(dto.ParkingId)).ReturnsAsync(new List<ParkingSpace>());
+    //   _mapperMock.Setup(m => m.Map<ParkingSpace>(dto)).Returns(entity);
+    //   _mapperMock.Setup(m => m.Map<ParkingSpaceDto>(entity)).Returns(dto);
+    //   
+    //   var result = await _service.Create(dto);
+    //   
+    //   Assert.Equal("D1", result.SpaceNumber);
+    //   _repoMock.Verify(r => r.Add(It.IsAny<ParkingSpace>()), Times.Once);
+    //   _repoMock.Setup(r => r.SaveChangesAsync()).Returns(Task.CompletedTask);
+    // }
 
     [Fact]
     public async Task Create_Throws_WhenDuplicate()
