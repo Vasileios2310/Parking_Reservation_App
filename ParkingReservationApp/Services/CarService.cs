@@ -1,0 +1,100 @@
+using AutoMapper;
+using ParkingReservationApp.DTOs;
+using ParkingReservationApp.Models;
+using ParkingReservationApp.Repositories;
+
+namespace ParkingReservationApp.Services;
+
+/// <summary>
+/// 
+/// </summary>
+public class CarService : ICarService
+{
+    private readonly ICarRepository _carRepository;
+    private readonly IMapper _mapper;
+    
+    public CarService(ICarRepository carRepository, IMapper mapper)
+    {
+        _carRepository = carRepository;
+        _mapper = mapper;
+    }
+    public async Task<IEnumerable<CarDto>> GetByUserId(string userId)
+    {
+       var cars = await _carRepository.GetByUserId(userId);
+       return _mapper.Map<IEnumerable<CarDto>>(cars);
+    }
+
+    public async Task<CarDto?> GetById(int id)
+    {
+        var car = await _carRepository.GetById(id);
+        return _mapper.Map<CarDto?>(car);
+    }
+
+    public async Task<CarDto?> GetByPlate(string plate)
+    {
+        var car = await _carRepository.GetByPlate(plate);
+        return _mapper.Map<CarDto?>(car);
+    }
+
+    public async Task<CarDto> Create(CarDto dto)
+    {
+        var existing = await _carRepository.GetByPlate(dto.LicencePlate);
+        if (existing != null)
+            throw new Exception("Car already exists");
+        
+        var car = _mapper.Map<Car>(dto);
+        await _carRepository.Add(car);
+        await _carRepository.SaveChangesAsync();
+        
+        return _mapper.Map<CarDto>(car);
+    }
+
+    public async Task Delete(int id)
+    {
+        await _carRepository.Delete(id);
+        await _carRepository.SaveChangesAsync();
+    }
+    
+    public async Task<bool> PlateExists(string plate)
+    {
+        var car = await _carRepository.GetByPlate(plate);
+        return car != null;
+    }
+
+    public async Task<int> CountByUser(string userId)
+    {
+        var cars = await _carRepository.GetByUserId(userId);
+        return cars.Count();
+    }
+
+    public async Task<CarDto> Update(CarDto dto)
+    {
+        var existing = await _carRepository.GetById(dto.Id);
+        if (existing == null) throw new Exception("Car not found.");
+
+        // Check for plate conflicts if needed
+        if (existing.LicencePlate != dto.LicencePlate)
+        {
+            var plateInUse = await _carRepository.GetByPlate(dto.LicencePlate);
+            if (plateInUse != null) throw new Exception("Licence plate already exists.");
+        }
+
+        existing.LicencePlate = dto.LicencePlate;
+        existing.UserId = dto.UserId;
+
+        await _carRepository.SaveChangesAsync();
+
+        return _mapper.Map<CarDto>(existing);
+    }
+
+    public async Task DeleteAllByUser(string userId)
+    {
+        var cars = await _carRepository.GetByUserId(userId);
+        foreach (var car in cars)
+        {
+            await _carRepository.Delete(car.Id);
+        }
+
+        await _carRepository.SaveChangesAsync();
+    }
+}

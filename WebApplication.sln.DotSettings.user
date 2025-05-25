@@ -25,6 +25,8 @@
     &lt;TestId&gt;xUnit::3B2B7551-64C4-42C2-A5ED-BD330AACFDBA::net9.0::ParkingReservationApp.test.ParkingSpaceServiceTest&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::3B2B7551-64C4-42C2-A5ED-BD330AACFDBA::net9.0::ParkingReservationApp.test.ReservationServiceTest&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::3B2B7551-64C4-42C2-A5ED-BD330AACFDBA::net9.0::ParkingReservationApp.test.ReservationControllerTest&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::3B2B7551-64C4-42C2-A5ED-BD330AACFDBA::net9.0::ParkingReservationApp.test.CarServiceTest&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::3B2B7551-64C4-42C2-A5ED-BD330AACFDBA::net9.0::ParkingReservationApp.test.CarControllerTest&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String>
 	</wpf:ResourceDictionary>
